@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Agriculture Assistant</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f4f7f2;
+        margin: 0;
+        padding: 30px;
+        color: #222;
+    }
+    .container { max-width: 850px; margin: 0 auto; }
+    h1 { color: #2e5c3e; text-align: center; }
+    .form-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+    }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; color: #333; }
+    input, select {
+        width: 100%; padding: 10px; border: 1px solid #ccc;
+        border-radius: 6px; font-size: 15px; box-sizing: border-box;
+    }
+    button {
+        width: 100%; padding: 12px; background: #2e5c3e; color: white;
+        border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 10px;
+    }
+    button:hover { background: #244a32; }
+    button:disabled { background: #999; cursor: not-allowed; }
+    .result-card {
+        background: white; border-radius: 12px; padding: 20px;
+        margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .result-card h2 {
+        color: #2e5c3e; border-bottom: 2px solid #eee; padding-bottom: 8px; margin-top: 0;
+    }
+    .loading { text-align: center; padding: 20px; color: #666; }
+    #results { display: none; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+        background: #eaf3ec; color: #2e5c3e; padding: 6px 12px;
+        border-radius: 20px; font-size: 14px; font-weight: 600;
+    }
+    .badge-light {
+        background: #f0f0f0; color: #555; padding: 5px 10px;
+        border-radius: 16px; font-size: 13px;
+    }
+    .forecast-table {
+        width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px;
+    }
+    .forecast-table th, .forecast-table td {
+        padding: 8px; text-align: center; border-bottom: 1px solid #eee;
+    }
+    .forecast-table th {
+        background: #f4f7f2; color: #2e5c3e;
+    }
+    .conflict-tag {
+        background: #fff3cd; color: #856404; padding: 8px; border-radius: 6px; margin-bottom: 6px; font-size: 14px;
+    }
+
+    /* --- Final Recommendation redesign --- */
+    .rec-card {
+        background: white;
+        border-radius: 16px;
+        padding: 0;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    .rec-header {
+        background: linear-gradient(135deg, #2e5c3e, #4a8c5f);
+        color: white;
+        padding: 22px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .rec-crop-name {
+        font-size: 22px;
+        font-weight: 700;
+    }
+    .rec-crop-label {
+        font-size: 13px;
+        opacity: 0.85;
+        font-weight: 400;
+    }
+    .suitability-pill {
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .suitability-excellent { background: #d4f5dd; color: #1a7a3c; }
+    .suitability-good { background: #dcf0d8; color: #3d7a2e; }
+    .suitability-fair { background: #fff0d1; color: #9a6a00; }
+    .suitability-poor { background: #fddede; color: #b32020; }
+    .suitability-unknown { background: #e5e5e5; color: #555; }
+
+    .rec-body { padding: 20px 25px; }
+    .rec-reasoning {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 18px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #eee;
+    }
+    .rec-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    @media (max-width: 600px) {
+        .rec-columns { grid-template-columns: 1fr; }
+    }
+    .rec-box {
+        border-radius: 10px;
+        padding: 15px;
+    }
+    .rec-box-risks {
+        background: #fdf2f2;
+        border-left: 4px solid #e74c3c;
+    }
+    .rec-box-actions {
+        background: #f0f9f0;
+        border-left: 4px solid #2e7d32;
+    }
+    .rec-box h3 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .rec-box-risks h3 { color: #c0392b; }
+    .rec-box-actions h3 { color: #1b6e2b; }
+    .rec-item {
+        font-size: 13.5px;
+        padding: 6px 0;
+        border-bottom: 1px dashed rgba(0,0,0,0.08);
+        display: flex;
+        gap: 8px;
+    }
+    .rec-item:last-child { border-bottom: none; }
+    .rec-summary-line {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #444;
+        background: #f9fbf7;
+        padding: 12px 15px;
+        border-radius: 8px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>🌾 Smart Agriculture Assistant</h1>
+
+    <div class="form-card">
+        <div class="form-group">
+            <label for="location">Location (Village/District)</label>
+            <input type="text" id="location" placeholder="e.g. Mandya, Karnataka">
+        </div>
+        <div class="form-group">
+            <label for="farm_size">Farm Size</label>
+            <input type="text" id="farm_size" placeholder="e.g. 2 acres">
+        </div>
+        <div class="form-group">
+            <label for="season">Season</label>
+            <select id="season">
+                <option value="Kharif">Kharif</option>
+                <option value="Rabi">Rabi</option>
+                <option value="Summer">Summer</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="previous_crop">Previous Crop (optional)</label>
+            <input type="text" id="previous_crop" placeholder="e.g. Rice">
+        </div>
+        <div class="form-group">
+            <label for="desired_crop">Which crop do you want to grow?</label>
+            <input type="text" id="desired_crop" placeholder="e.g. Cashew, Maize, Cotton">
+        </div>
+        <button id="submitBtn" onclick="getPlan()">Get Farming Plan</button>
+    </div>
+
+    <div class="loading" id="loadingMsg" style="display:none;">
+        ⏳ Analyzing your farm... this may take 15-30 seconds.
+    </div>
+
+    <div id="results"></div>
+</div>
+
+<script>
+async function getPlan() {
+    const btn = document.getElementById('submitBtn');
+    const loadingMsg = document.getElementById('loadingMsg');
+    const results = document.getElementById('results');
+
+    const payload = {
+        location: document.getElementById('location').value,
+        farm_size: document.getElementById('farm_size').value,
+        season: document.getElementById('season').value,
+        previous_crop: document.getElementById('previous_crop').value || null,
+        desired_crop: document.getElementById('desired_crop').value
+    };
+
+    if (!payload.location || !payload.farm_size || !payload.desired_crop) {
+        alert("Please fill in at least Location, Farm Size, and Desired Crop.");
+        return;
+    }
+
+    btn.disabled = true;
+    loadingMsg.style.display = 'block';
+    results.style.display = 'none';
+    results.innerHTML = '';
+
+    try {
+        const response = await fetch('/plan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        renderResults(data);
+    } catch (err) {
+        results.innerHTML = `<div class="result-card"><p>Error: ${err.message}</p></div>`;
+        results.style.display = 'block';
+    } finally {
+        btn.disabled = false;
+        loadingMsg.style.display = 'none';
+    }
+}
+
+function suitabilityClass(rating) {
+    if (!rating) return 'suitability-unknown';
+    const r = rating.toLowerCase();
+    if (r.includes('excellent')) return 'suitability-excellent';
+    if (r.includes('good')) return 'suitability-good';
+    if (r.includes('fair')) return 'suitability-fair';
+    if (r.includes('poor')) return 'suitability-poor';
+    return 'suitability-unknown';
+}
+
+function renderResults(data) {
+    const results = document.getElementById('results');
+    let html = '';
+
+    // ---- Final Recommendation: redesigned, visual, boxed ----
+    if (data.final_recommendation) {
+        const fr = data.final_recommendation;
+        const pillClass = suitabilityClass(fr.suitability_rating);
+
+        html += `<div class="rec-card">`;
+        html += `<div class="rec-header">
+            <div>
+                <div class="rec-crop-label">YOUR CHOSEN CROP</div>
+                <div class="rec-crop-name">🌾 ${fr.chosen_crop || 'N/A'}</div>
+            </div>
+            <div class="suitability-pill ${pillClass}">${fr.suitability_rating || 'Unknown'}</div>
+        </div>`;
+
+        html += `<div class="rec-body">`;
+        if (fr.suitability_reasoning) {
+            html += `<div class="rec-reasoning">${fr.suitability_reasoning}</div>`;
+        }
+
+        html += `<div class="rec-columns">`;
+
+        html += `<div class="rec-box rec-box-risks"><h3>⚠️ Risks to Watch</h3>`;
+        if (fr.risks_to_watch && fr.risks_to_watch.length) {
+            fr.risks_to_watch.forEach(item => {
+                html += `<div class="rec-item">🔸 <span>${item}</span></div>`;
+            });
+        } else {
+            html += `<div class="rec-item">No major risks identified</div>`;
+        }
+        html += `</div>`;
+
+        html += `<div class="rec-box rec-box-actions"><h3>✅ This Week's Actions</h3>`;
+        if (fr.this_week_action_items && fr.this_week_action_items.length) {
+            fr.this_week_action_items.forEach(item => {
+                html += `<div class="rec-item">▪️ <span>${item}</span></div>`;
+            });
+        } else {
+            html += `<div class="rec-item">No specific actions listed</div>`;
+        }
+        html += `</div>`;
+
+        html += `</div>`; // end rec-columns
+
+        if (fr.overall_recommendation) {
+            html += `<div class="rec-summary-line">💬 ${fr.overall_recommendation}</div>`;
+        }
+
+        html += `</div></div>`; // end rec-body, rec-card
+    }
+
+    // Farm Profile
+    if (data.farm_profile) {
+        const fp = data.farm_profile;
+        html += `<div class="result-card"><h2>🌱 Farm Profile</h2>`;
+        html += `<div class="badge-row">`;
+        html += `<span class="badge">🪨 ${fp.soil_type || 'N/A'}</span>`;
+        html += `<span class="badge">💧 Moisture: ${fp.estimated_soil_moisture || 'N/A'}</span>`;
+        html += `<span class="badge">🧪 Nutrients: ${fp.estimated_nutrient_status || 'N/A'}</span>`;
+        html += `</div>`;
+        if (fp.suitable_crop_categories && fp.suitable_crop_categories.length) {
+            html += `<div class="badge-row" style="margin-top:8px;">`;
+            fp.suitable_crop_categories.forEach(cat => html += `<span class="badge-light">${cat}</span>`);
+            html += `</div>`;
+        }
+        html += `</div>`;
+    }
+
+    // Weather Insights
+    if (data.weather_insights) {
+        const w = data.weather_insights;
+        html += `<div class="result-card"><h2>🌦️ Weather Insights</h2>`;
+
+        html += `<div class="badge-row">`;
+        html += `<span class="badge">🌱 Sow: ${w.best_sowing_window || 'N/A'}</span>`;
+        html += `<span class="badge">💦 ${w.irrigation_recommendation || 'N/A'}</span>`;
+        html += `</div>`;
+
+        if (w.extreme_weather_alert && w.extreme_weather_alert !== "None") {
+            html += `<div class="conflict-tag" style="margin-top:10px;">⚠️ ${w.extreme_weather_alert}</div>`;
+        }
+
+        if (w.raw_forecast && w.raw_forecast.length) {
+            html += `<table class="forecast-table"><thead><tr>
+                <th>Day</th><th>Temp (°C)</th><th>Rain (mm)</th><th>Humidity</th><th>Wind</th>
+            </tr></thead><tbody>`;
+            w.raw_forecast.forEach(day => {
+                html += `<tr>
+                    <td>${day.date ? day.date.split(",")[0] : 'Day ' + day.day}</td>
+                    <td>${day.temperature_c}°</td>
+                    <td>${day.rainfall_mm} mm</td>
+                    <td>${day.humidity_percent}%</td>
+                    <td>${day.wind_speed_kmph} km/h</td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            html += `<canvas id="weatherChart" height="90" style="margin-top:15px;"></canvas>`;
+        }
+
+        html += `</div>`;
+    }
+
+    results.innerHTML = html;
+    results.style.display = 'block';
+
+    if (data.weather_insights && data.weather_insights.raw_forecast) {
+        drawWeatherChart(data.weather_insights.raw_forecast);
+    }
+}
+
+let weatherChartInstance = null;
+
+function drawWeatherChart(forecast) {
+    const ctx = document.getElementById('weatherChart');
+    if (!ctx) return;
+
+    if (weatherChartInstance) {
+        weatherChartInstance.destroy();
+    }
+
+    const labels = forecast.map(d => d.date ? d.date.split(",")[0] : 'Day ' + d.day);
+    const temps = forecast.map(d => d.temperature_c);
+    const rain = forecast.map(d => d.rainfall_mm);
+
+    weatherChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Temperature (°C)',
+                    data: temps,
+                    backgroundColor: '#e67e22',
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Rainfall (mm)',
+                    data: rain,
+                    backgroundColor: '#3498db',
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                y: { type: 'linear', position: 'left', title: { display: true, text: '°C' } },
+                y1: { type: 'linear', position: 'right', title: { display: true, text: 'mm' }, grid: { drawOnChartArea: false } }
+            }
+        }
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+{
+  "45cc3bd81afca86ecf21087bae292d41": {
+    "cached_at": "2026-07-20T12:49:56.921253",
+    "data": {
+      "best_sowing_window": "Day 3-4, during the dry spell to avoid seed wash-off from predicted heavy rain.",
+      "irrigation_recommendation": "Soil moisture is already high from previous rice cultivation and incoming rain; suspend irrigation to avoid waterlogging and root rot.",
+      "harvest_alert": "None",
+      "extreme_weather_alert": "High intensity rainfall expected on Day 5 and Day 6 (approx 58mm total), which may cause surface runoff and soil erosion.",
+      "summary": "The week begins with moderate moisture, followed by a dry but windy mid-week window suitable for field preparation. Significant heavy rainfall is forecast for Friday and Saturday, which may saturate red sandy loam soils; ensure proper drainage channels are open to prevent standing water before the weekend.",
+      "raw_forecast": [
+        {
+          "day": 1,
+          "date": "Monday, 20 July 2026",
+          "temperature_c": 25.9,
+          "humidity_percent": 51.8,
+          "rainfall_mm": 9.3,
+          "wind_speed_kmph": 8.0
+        },
+        {
+          "day": 2,
+          "date": "Tuesday, 21 July 2026",
+          "temperature_c": 30.7,
+          "humidity_percent": 64.3,
+          "rainfall_mm": 12.6,
+          "wind_speed_kmph": 18.4
+        },
+        {
+          "day": 3,
+          "date": "Wednesday, 22 July 2026",
+          "temperature_c": 26.3,
+          "humidity_percent": 63.5,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 24.4
+        },
+        {
+          "day": 4,
+          "date": "Thursday, 23 July 2026",
+          "temperature_c": 31.3,
+          "humidity_percent": 63.3,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 24.0
+        },
+        {
+          "day": 5,
+          "date": "Friday, 24 July 2026",
+          "temperature_c": 33.1,
+          "humidity_percent": 51.3,
+          "rainfall_mm": 29.5,
+          "wind_speed_kmph": 19.1
+        },
+        {
+          "day": 6,
+          "date": "Saturday, 25 July 2026",
+          "temperature_c": 31.7,
+          "humidity_percent": 74.8,
+          "rainfall_mm": 28.4,
+          "wind_speed_kmph": 9.7
+        },
+        {
+          "day": 7,
+          "date": "Sunday, 26 July 2026",
+          "temperature_c": 29.0,
+          "humidity_percent": 83.0,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 9.3
+        }
+      ]
+    }
+  },
+  "10f77d880b690073b2f7deeebfe33e64": {
+    "cached_at": "2026-07-15T19:06:05.956528",
+    "data": {
+      "best_sowing_window": "None, current weather conditions are unsuitable for sowing.",
+      "irrigation_recommendation": "Prioritize irrigation due to the absence of rainfall and intense heat spikes; apply mulch to conserve soil moisture in the laterite soil.",
+      "harvest_alert": "None",
+      "extreme_weather_alert": "Heatwave alert: Temperatures reaching 42\u00b0C on Day 3 and 39.2\u00b0C on Day 5, posing significant heat stress risks.",
+      "summary": "The week is characterized by dry conditions and extreme temperature spikes, reaching up to 42\u00b0C. With no rainfall forecasted, soil moisture levels will deplete rapidly. Farmers should focus on protective irrigation and mulching to shield crops from heat stress and prevent further moisture loss in the nutrient-poor laterite soil.",
+      "raw_forecast": [
+        {
+          "day": 1,
+          "date": "Wednesday, 15 July 2026",
+          "temperature_c": 29.2,
+          "humidity_percent": 78.1,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 11.3
+        },
+        {
+          "day": 2,
+          "date": "Thursday, 16 July 2026",
+          "temperature_c": 32.7,
+          "humidity_percent": 66.1,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 12.2
+        },
+        {
+          "day": 3,
+          "date": "Friday, 17 July 2026",
+          "temperature_c": 42.0,
+          "humidity_percent": 60.2,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 24.5
+        },
+        {
+          "day": 4,
+          "date": "Saturday, 18 July 2026",
+          "temperature_c": 28.9,
+          "humidity_percent": 48.5,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 7.7
+        },
+        {
+          "day": 5,
+          "date": "Sunday, 19 July 2026",
+          "temperature_c": 39.2,
+          "humidity_percent": 36.8,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 9.4
+        },
+        {
+          "day": 6,
+          "date": "Monday, 20 July 2026",
+          "temperature_c": 33.9,
+          "humidity_percent": 76.8,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 6.9
+        },
+        {
+          "day": 7,
+          "date": "Tuesday, 21 July 2026",
+          "temperature_c": 37.7,
+          "humidity_percent": 65.9,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 17.4
+        }
+      ]
+    }
+  },
+  "3a981fb712e0ea04064a5dbeb0d3c6a8": {
+    "cached_at": "2026-07-15T19:37:07.837869",
+    "data": {
+      "best_sowing_window": "Not recommended this week; postpone until moisture levels improve.",
+      "irrigation_recommendation": "The lack of rainfall and high temperatures (peaking at 39\u00b0C) will deplete soil moisture quickly; prioritize drip irrigation for plantation crops and apply mulch to conserve water.",
+      "harvest_alert": "None",
+      "extreme_weather_alert": "Heatwave alert: Temperatures reaching 39\u00b0C pose a risk of heat stress to young spice crops; ensure adequate soil hydration.",
+      "summary": "The week ahead for Sirsi is characterized by dry, hot weather with no expected rainfall and peak temperatures reaching 39\u00b0C. Given the low soil moisture and the presence of heat-sensitive plantation crops, focus on moisture conservation through mulching and consistent irrigation to mitigate heat stress.",
+      "raw_forecast": [
+        {
+          "day": 1,
+          "date": "Wednesday, 15 July 2026",
+          "temperature_c": 28.4,
+          "humidity_percent": 54.8,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 19.7
+        },
+        {
+          "day": 2,
+          "date": "Thursday, 16 July 2026",
+          "temperature_c": 37.7,
+          "humidity_percent": 77.6,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 17.1
+        },
+        {
+          "day": 3,
+          "date": "Friday, 17 July 2026",
+          "temperature_c": 38.5,
+          "humidity_percent": 58.8,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 8.3
+        },
+        {
+          "day": 4,
+          "date": "Saturday, 18 July 2026",
+          "temperature_c": 39.0,
+          "humidity_percent": 52.8,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 9.9
+        },
+        {
+          "day": 5,
+          "date": "Sunday, 19 July 2026",
+          "temperature_c": 35.8,
+          "humidity_percent": 45.9,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 11.2
+        },
+        {
+          "day": 6,
+          "date": "Monday, 20 July 2026",
+          "temperature_c": 30.4,
+          "humidity_percent": 53.2,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 24.0
+        },
+        {
+          "day": 7,
+          "date": "Tuesday, 21 July 2026",
+          "temperature_c": 34.5,
+          "humidity_percent": 43.4,
+          "rainfall_mm": 0.0,
+          "wind_speed_kmph": 14.4
+        }
+      ]
+    }
+  }
+}
